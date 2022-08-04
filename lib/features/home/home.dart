@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../../core/widgets/task_item/task_item.dart';
+import 'package:get/get.dart';
+import 'package:task_app/core/get_x_controllers/tasks_controller.dart';
+import 'package:task_app/features/home/widgets/task_list.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -9,60 +10,34 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    // todos os controller são SINGLETON e GLOBAIS
+    final test = Get.put(TestController());
+    Future.delayed(const Duration(seconds: 5)).then((value) {
+      test.updateString('joao');
+    });
 
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          const SliverAppBar(
-            expandedHeight: 50,
-            pinned: true,
-            shape: RoundedRectangleBorder(
+      body: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          SliverAppBar(
+            floating: false,
+            snap: false,
+            title: GetBuilder<TestController>(
+              builder: (_) => Text(
+                test.title,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(
                 bottom: Radius.elliptical(67, 122),
               ),
             ),
-            flexibleSpace: FlexibleSpaceBar(
-              title: Text(
-                'Your tasks',
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Column(
-                    children: [
-                      TaskItem(
-                        size: size,
-                      ),
-                      TaskItem(
-                        size: size,
-                      ),
-                      TaskItem(
-                        size: size,
-                      ),
-                      TaskItem(
-                        size: size,
-                      ),
-                      TaskItem(
-                        size: size,
-                      ),
-                      TaskItem(
-                        size: size,
-                      ),
-                      SizedBox(
-                        height: size.height * 0.3,
-                      )
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
+          )
         ],
+        body: TaskList(
+          size: size,
+        ),
       ),
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterDocked,

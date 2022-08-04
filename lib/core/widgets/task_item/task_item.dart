@@ -8,7 +8,15 @@ import '../progress_bar/progress_bar.dart';
 
 class TaskItem extends StatefulWidget {
   final Size size;
-  const TaskItem({Key? key, required this.size}) : super(key: key);
+  final String title;
+  final double complete;
+
+  const TaskItem({
+    Key? key,
+    required this.size,
+    required this.title,
+    required this.complete,
+  }) : super(key: key);
 
   @override
   State<TaskItem> createState() => _TaskItemState();
@@ -37,20 +45,21 @@ class _TaskItemState extends State<TaskItem> {
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'A very very very long title for teste, if this could broke the size of the container',
+                  widget.title,
                   style: AppTextStyle.taskTitle,
                   overflow: TextOverflow.ellipsis,
                 ),
-                ProgressBar(value: 0.2),
+                ProgressBar(value: widget.complete),
                 SizedBox(
                   height: widget.size.height * 0.03,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '${(0.2 * 100).toStringAsFixed(2)}% complete',
+                        '${(widget.complete * 100).toStringAsFixed(2)}% complete',
                         style: AppTextStyle.taskSubtitle,
                       ),
                       CustomIconButton(

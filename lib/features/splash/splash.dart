@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:task_app/core/get_x_controllers/tasks_controller.dart';
 import 'package:task_app/themes/app_colors.dart';
 
 import 'splash_controller.dart';
@@ -28,6 +30,8 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    final test = Get.put(TestController());
+    test.updateString('splash');
 
     return Container(
       width: size.width,
