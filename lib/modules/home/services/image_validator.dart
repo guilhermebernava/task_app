@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../themes/app_images.dart';
+import '../../../themes/app_images.dart';
 
 class ImageValidator {
   static ImageProvider imageProviderValidator(String url) {

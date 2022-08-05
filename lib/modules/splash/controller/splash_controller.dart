@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../services/route_services.dart';
-import '../home/home.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class SplashController {
   late final AnimationController controller;
@@ -15,7 +14,7 @@ class SplashController {
 
     controller.forward().then((value) => controller.reverse()).then((value) {
       controller.dispose();
-      RouteServices.redirectNoReturn(context, Home.route);
+      Modular.to.navigate('/home/');
     });
   }
 }

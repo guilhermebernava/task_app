@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:task_app/core/get_x_controllers/tasks_controller.dart';
-import 'package:task_app/features/home/widgets/task_list.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import '../stores/tasks.dart';
+import '../widgets/task_list/task_list.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -10,25 +10,19 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    // todos os controller são SINGLETON e GLOBAIS
-    final test = Get.put(TestController());
-    Future.delayed(const Duration(seconds: 5)).then((value) {
-      test.updateString('joao');
-    });
+    final tasksStore = Modular.get<Tasks>();
 
     return Scaffold(
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
-          SliverAppBar(
+          const SliverAppBar(
             floating: false,
             snap: false,
-            title: GetBuilder<TestController>(
-              builder: (_) => Text(
-                test.title,
-                textAlign: TextAlign.center,
-              ),
+            title: Text(
+              'Your Tasks',
+              textAlign: TextAlign.center,
             ),
-            shape: const RoundedRectangleBorder(
+            shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(
                 bottom: Radius.elliptical(67, 122),
               ),
@@ -42,7 +36,9 @@ class Home extends StatelessWidget {
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterDocked,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          tasksStore.add();
+        },
         child: const Icon(
           Icons.add_circle_outlined,
           size: 50,

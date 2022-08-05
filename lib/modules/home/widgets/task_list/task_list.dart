@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import '../../../core/get_x_controllers/tasks_controller.dart';
-import '../../../core/widgets/task_item/task_item.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:task_app/modules/home/stores/tasks.dart';
+import '../task_item/task_item.dart';
 
 class TaskList extends StatelessWidget {
   final Size size;
@@ -13,24 +14,26 @@ class TaskList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tasksController = Get.put(TasksControlelr());
+    final tasksStore = Modular.get<Tasks>();
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: SizedBox(
         height: size.height,
         width: size.width,
-        child: GetBuilder<TasksControlelr>(
+        child: Observer(
           builder: (_) => ListView.builder(
             padding: EdgeInsets.only(
-                bottom: size.height * 0.3, top: size.height * 0.01),
+              bottom: size.height * 0.3,
+              top: size.height * 0.01,
+            ),
             shrinkWrap: true,
             itemBuilder: (context, index) => TaskItem(
               size: size,
-              title: tasksController.tasks[index].title,
-              complete: tasksController.tasks[index].complete,
+              title: tasksStore.tasks[index].title,
+              complete: tasksStore.tasks[index].complete,
             ),
-            itemCount: tasksController.tasks.length,
+            itemCount: tasksStore.tasks.length,
           ),
         ),
       ),

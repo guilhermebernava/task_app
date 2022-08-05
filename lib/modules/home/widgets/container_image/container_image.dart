@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../services/image_validator.dart';
-import '../../../themes/app_colors.dart';
+import '../../../../themes/app_colors.dart';
+import '../../services/image_validator.dart';
 
 class ContainerImage extends StatelessWidget {
   final Widget child;

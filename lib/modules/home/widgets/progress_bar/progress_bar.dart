@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../themes/app_colors.dart';
+import '../../../../themes/app_colors.dart';
 
 class ProgressBar extends ClipRRect {
   ProgressBar({Key? key, required double value, double height = 8})
